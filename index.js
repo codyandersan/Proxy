@@ -13,12 +13,13 @@ app.get('/', (req, res) => {
 app.get('/download', async (req, res) => {
     const queries = req.query;
     const videoUrl = queries.url + "?" + Object.keys(queries).map((key) => {
-        if (key !== "url") {
+        if (key !== "url" && key !== "filename") {
             return key + '=' + queries[key];
         }
     }).join('&');
-
+    const filename = queries.filename;
     console.log(videoUrl);
+    console.log(filename);
 
     try {
         const response = await axios.get(videoUrl, { responseType: 'stream' });
